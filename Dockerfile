@@ -24,8 +24,6 @@ RUN curl -L  "https://oscdl.ipa.go.jp/IPAexfont/ipaexg00301.zip" > font.zip && \
     echo "font.family : IPAexGothic" >>  /opt/conda/lib/python3.6/site-packages/matplotlib/mpl-data/matplotlibrc && \
     rm -r ./.cache
 
-RUN ldconfig
-
 ADD CRF++-0.58.tar.gz ./
 RUN cd CRF++-0.58 && \
     ./configure && \
@@ -39,4 +37,10 @@ RUN cd cabocha-0.69 && \
     make install && \
     swig -python -shadow -c++ swig/CaboCha.i && \
     mv swig/CaboCha.py python/ && \
-    mv swig/CaboCha_wrap.cxx python/
+    mv swig/CaboCha_wrap.cxx python/ && \
+    cd python && \
+    python setup.py build_ext && \
+    python setup.py install && \
+    ldconfig /etc/ld.so.conf.d
+
+
