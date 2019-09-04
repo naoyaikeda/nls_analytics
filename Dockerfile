@@ -41,9 +41,25 @@ RUN cd cabocha-0.69 && \
     python setup.py install && \
     ldconfig /etc/ld.so.conf.d
 
+RUN wget http://nlp.ist.i.kyoto-u.ac.jp/nl-resource/juman/juman-7.01.tar.bz2 && \
+    tar -jxvf juman-7.01.tar.bz2 && \
+    cd juman-7.01 && \
+    ./configure && \
+    make && \
+    make install && \
+    ldconfig /etc/ld.so.conf.d
+
 RUN wget http://lotus.kuee.kyoto-u.ac.jp/nl-resource/jumanpp/jumanpp-1.01.tar.xz && \
     tar -xvf jumanpp-1.01.tar.xz && \
     cd jumanpp-1.01 && \
+    ./configure && \
+    make && \
+    make install && \
+    ldconfig /etc/ld.so.conf.d
+
+RUN wget http://nlp.ist.i.kyoto-u.ac.jp/nl-resource/knp/knp-4.19.tar.bz2 && \
+    tar -jxvf knp-4.19.tar.bz2 && \
+    cd knp-4.19 && \
     ./configure && \
     make && \
     make install && \
