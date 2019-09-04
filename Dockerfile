@@ -3,17 +3,8 @@ USER root
 LABEL maintainer="Naoya Ikeda <n_ikeda@hotmail.com>"
 RUN echo "now building..."
 
-RUN apt-get update \
-    && apt-get install -y mecab \
-    && apt-get install -y libmecab-dev \
-    && apt-get install -y mecab-ipadic-utf8\
-    && apt-get install -y git\
-    && apt-get install -y make\
-    && apt-get install -y curl\
-    && apt-get install -y xz-utils\
-    && apt-get install -y file\
-    && apt-get install -y sudo\
-    && apt-get install -y wget
+RUN apt update  && \
+    apt install -y mecab libmecab-dev mecab-ipadic-utf8 git make curl xz-utils file sudo wget swig
 
 RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git\
     && cd mecab-ipadic-neologd\
@@ -25,12 +16,15 @@ RUN conda install nltk
 RUN conda install lxml
 RUN pip install janome
 RUN pip install mecab-python3
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/lib
 
-RUN curl -L  "https://oscdl.ipa.go.jp/IPAexfont/ipaexg00301.zip" > font.zip
-RUN unzip font.zip
-RUN cp ipaexg00301/ipaexg.ttf /opt/conda/lib/python3.6/site-packages/matplotlib/mpl-data/fonts/ttf/ipaexg.ttf
-RUN echo "font.family : IPAexGothic" >>  /opt/conda/lib/python3.6/site-packages/matplotlib/mpl-data/matplotlibrc
-RUN rm -r ./.cache
+RUN curl -L  "https://oscdl.ipa.go.jp/IPAexfont/ipaexg00301.zip" > font.zip && \
+    unzip font.zip && \
+    cp ipaexg00301/ipaexg.ttf /opt/conda/lib/python3.6/site-packages/matplotlib/mpl-data/fonts/ttf/ipaexg.ttf && \
+    echo "font.family : IPAexGothic" >>  /opt/conda/lib/python3.6/site-packages/matplotlib/mpl-data/matplotlibrc && \
+    rm -r ./.cache
+
+RUN ldconfig
 
 ADD CRF++-0.58.tar.gz ./
 RUN cd CRF++-0.58 && \
@@ -38,3 +32,11 @@ RUN cd CRF++-0.58 && \
     make && \
     make install
 
+ADD cabocha-0.69.tar.bz2 ./
+RUN cd cabocha-0.69 && \
+    ./configure --with-charset=UTF8 && \
+    make && \
+    make install && \
+    swig -python -shadow -c++ swig/CaboCha.i && \
+    mv swig/CaboCha.py python/ && \
+    mv swig/CaboCha_wrap.cxx python/

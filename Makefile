@@ -1,6 +1,6 @@
 USER=nikeda
 NAME=nls_analytics
-VERSION=0.0.9
+VERSION=0.0.13
 
 build:
 	docker build -t $(USER)/$(NAME):$(VERSION) .
