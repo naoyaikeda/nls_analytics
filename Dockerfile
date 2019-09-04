@@ -41,12 +41,12 @@ RUN cd cabocha-0.69 && \
     python setup.py install && \
     ldconfig /etc/ld.so.conf.d
 
-RUN wget http://lotus.kuee.kyoto-u.ac.jp/nl-resource/jumanpp/jumanpp-1.01.tar.xz && \
-    tar -xvf jumanpp-1.01.tar.xz && \
-    cd jumanpp-1.01 && \
-    mkdir build && \
-    cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local && \
-    make && \
-    make install && \
-    ldconfig /etc/ld.so.conf.d
+# RUN wget http://lotus.kuee.kyoto-u.ac.jp/nl-resource/jumanpp/jumanpp-1.01.tar.xz && \
+#     tar -xvf jumanpp-1.01.tar.xz && \
+#     cd jumanpp-1.01 && \
+#     mkdir build && \
+#     cd build && \
+#     cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local && \
+#     make && \
+#     make install && \
+#     ldconfig /etc/ld.so.conf.d
