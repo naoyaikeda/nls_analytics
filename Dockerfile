@@ -1,10 +1,11 @@
 FROM nikeda/tabular_analytics:latest
 USER root
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 LABEL maintainer="Naoya Ikeda <n_ikeda@hotmail.com>"
 RUN echo "now building..."
 
 RUN apt update  && \
-    apt install -y mecab libmecab-dev mecab-ipadic-utf8 git make curl xz-utils file sudo wget swig
+    apt install -y mecab libmecab-dev mecab-ipadic-utf8 git make curl xz-utils file sudo wget swig cmake
 
 RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git\
     && cd mecab-ipadic-neologd\
@@ -43,4 +44,12 @@ RUN cd cabocha-0.69 && \
     python setup.py install && \
     ldconfig /etc/ld.so.conf.d
 
-
+RUN wget http://lotus.kuee.kyoto-u.ac.jp/nl-resource/jumanpp/jumanpp-1.01.tar.xz && \
+    tar -xvf jumanpp-1.01.tar.xz && \
+    cd jumanpp-1.01 && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local && \
+    make && \
+    make install && \
+    ldconfig /etc/ld.so.conf.d
