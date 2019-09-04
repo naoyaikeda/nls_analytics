@@ -11,12 +11,9 @@ RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git\
     && cd mecab-ipadic-neologd\
     && bin/install-mecab-ipadic-neologd -n -y
 
-RUN conda install -c conda-forge fasttext
-RUN conda install gensim
-RUN conda install nltk
-RUN conda install lxml
-RUN pip install janome
-RUN pip install mecab-python3
+RUN conda install -c conda-forge fasttext && \
+    conda install gensim nltk lxml && \
+    pip install janome mecab-python3
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/lib
 
 RUN curl -L  "https://oscdl.ipa.go.jp/IPAexfont/ipaexg00301.zip" > font.zip && \
