@@ -64,3 +64,5 @@ RUN wget http://nlp.ist.i.kyoto-u.ac.jp/nl-resource/knp/knp-4.19.tar.bz2 && \
     make && \
     make install && \
     ldconfig /etc/ld.so.conf.d
+
+RUN pip install pyknp
