@@ -5,7 +5,7 @@ LABEL maintainer="Naoya Ikeda <n_ikeda@hotmail.com>"
 RUN echo "now building..."
 
 RUN apt update  && \
-    apt install -y mecab libmecab-dev mecab-ipadic-utf8 git make curl xz-utils file sudo wget swig cmake libboost-dev
+    apt install -y mecab libmecab-dev mecab-ipadic-utf8 git make curl xz-utils file sudo wget swig cmake libboost-dev pandoc
 
 RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git\
     && cd mecab-ipadic-neologd\
