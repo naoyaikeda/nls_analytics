@@ -16,12 +16,6 @@ RUN conda install -c conda-forge fasttext && \
     pip install janome mecab-python3
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/lib
 
-RUN curl -L  "https://oscdl.ipa.go.jp/IPAexfont/ipaexg00301.zip" > font.zip && \
-    unzip font.zip && \
-    cp ipaexg00301/ipaexg.ttf /opt/conda/lib/python3.6/site-packages/matplotlib/mpl-data/fonts/ttf/ipaexg.ttf && \
-    echo "font.family : IPAexGothic" >>  /opt/conda/lib/python3.6/site-packages/matplotlib/mpl-data/matplotlibrc && \
-    rm -r ./.cache
-
 ADD CRF++-0.58.tar.gz ./
 RUN cd CRF++-0.58 && \
     ./configure && \
